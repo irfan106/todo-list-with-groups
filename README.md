@@ -4,7 +4,7 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 ## Live Link:
 
-[In the project directory, you can run:
+[:
 ](https://irfan-todo-list-with-groups.netlify.app/)
 ## Available Scripts
 
