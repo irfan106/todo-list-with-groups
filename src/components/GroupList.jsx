@@ -10,13 +10,14 @@ const GroupList = () => {
   const [timeoutId, setTimeoutId] = useState(null);
   const [showStatus, setShowStatus] = useState(false);
   const [allValidationsPassed, setAllValidationsPassed] = useState(false);
+  const [errorMessage, setErrorMessage] = useState('');
 
   const handleAddGroup = () => {
     const lastGroup = groups[groups.length - 1];
     const newUpperLimit = 10;
 
     if (lastGroup && lastGroup.to >= 10) {
-      alert('You have reached the maximum limit.');
+      setErrorMessage('You have reached the maximum limit.');
       return;
     }
 
@@ -45,13 +46,14 @@ const GroupList = () => {
   const validateUpperLimit = (index, newUpperLimit) => {
     const lowerLimit = groups[index].from;
     if (newUpperLimit === '' || isNaN(newUpperLimit) || newUpperLimit < lowerLimit || newUpperLimit > 10) {
-      alert('Upper limit must be a number greater than lower limit and less than or equal to 10');
+      setErrorMessage('Upper limit must be a number greater than or equal to the lower limit and less than or equal to 10.');
       setAllValidationsPassed(false);
       return;
     }
 
     setAllValidationsPassed(true);
     dispatch(updateUpperLimit(index, parseInt(newUpperLimit, 10)));
+    setErrorMessage('');
   };
 
   const handleShowStatus = () => {
@@ -79,6 +81,7 @@ const GroupList = () => {
       <button className="status-button" onClick={handleShowStatus} disabled={!allValidationsPassed || groups.length === 0 || groups[groups.length - 1].to !== 10}>
         Show Status
       </button>
+      {errorMessage && <div className="error-message">{errorMessage}</div>}
       {showStatus && <div className="status-list-container"><StatusList /></div>}
     </div>
   );
